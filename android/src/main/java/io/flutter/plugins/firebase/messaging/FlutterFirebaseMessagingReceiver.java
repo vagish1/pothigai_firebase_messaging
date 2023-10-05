@@ -93,11 +93,12 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
           // Handle the successful response here
           // Access data like: bookingDetails.getData().getBookingId(), bookingDetails.getData().getTariffDetails().getPrice(), etc.
           Toast.makeText(context, "Api Call Done", Toast.LENGTH_SHORT).show();
-          if(bookingDetails.getResponseCode() !=109){
-            Toast.makeText(context,"Response = "+bookingDetails.getResponseCode(),Toast.LENGTH_LONG).show();
-
-            return;
-          }
+          System.out.println(bookingDetails.getResponseCode()+"");
+//          if(bookingDetails.getResponseCode() !=109){
+//            Toast.makeText(context,"Response = "+bookingDetails.getResponseCode(),Toast.LENGTH_LONG).show();
+//
+//            return;
+//          }
           final MediaPlayer player = MediaPlayer.create(context, R.raw.ringtone);
 
 

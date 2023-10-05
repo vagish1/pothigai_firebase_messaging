@@ -429,7 +429,7 @@ public class FlutterFirebaseMessagingPlugin
 
       editor.apply();
       result.success("Cookie set successfully");
-      Toast.makeText(mainActivity,"Cookie Saved",Toast.LENGTH_LONG);
+      Toast.makeText(mainActivity,"Cookie Saved",Toast.LENGTH_LONG).show();
       return;
     }
 

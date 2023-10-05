@@ -78,12 +78,12 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
 
  if(remoteMessage.getData().get("subject").equals("bookingStatusPending")){
 
-      Toast.makeText(context,"Inside If",Toast.LENGTH_LONG);
+      Toast.makeText(context,"Inside If",Toast.LENGTH_LONG).show();
 
       SharedPreferences preferences = context.getSharedPreferences("session",Context.MODE_PRIVATE);
       String cookie = preferences.getString("cookie","");
       if(cookie.isEmpty()){
-        Toast.makeText(context,"No Cookie",Toast.LENGTH_LONG);
+        Toast.makeText(context,"No Cookie",Toast.LENGTH_LONG).show();
         return;
       }
 
@@ -94,7 +94,7 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
           // Access data like: bookingDetails.getData().getBookingId(), bookingDetails.getData().getTariffDetails().getPrice(), etc.
 
           if(bookingDetails.getResponseCode() !=109){
-            Toast.makeText(context,"Response = "+bookingDetails.getResponseCode(),Toast.LENGTH_LONG);
+            Toast.makeText(context,"Response = "+bookingDetails.getResponseCode(),Toast.LENGTH_LONG).show();
 
             return;
           }
@@ -151,7 +151,7 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
           skip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-              Toast.makeText(context,"You have cancelled this order",Toast.LENGTH_LONG);
+              Toast.makeText(context,"You have cancelled this order",Toast.LENGTH_LONG).show();
               manager.removeView(inflater);
               if(player.isPlaying()){
                 player.stop();
@@ -167,7 +167,7 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
               BookingDetailsRequest.acceptBooking(context, remoteMessage.getData().get("recordId"), cookie, new BookingDetailsRequest.AcceptBookingListener() {
                 @Override
                 public void onSuccess() {
-                  Toast.makeText(context,"Thanks for accepting booking, check booking details inside app",Toast.LENGTH_LONG);
+                  Toast.makeText(context,"Thanks for accepting booking, check booking details inside app",Toast.LENGTH_LONG).show();
                   manager.removeView(inflater);
                   if(player.isPlaying()){
                     player.stop();
@@ -177,7 +177,7 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
                 @Override
                 public void onError(String errorMessage) {
                   slideToConfirm.resetSlider();
-                  Toast.makeText(context,"We encountered an error while accepting the booking",Toast.LENGTH_LONG);
+                  Toast.makeText(context,"We encountered an error while accepting the booking",Toast.LENGTH_LONG).show();
 
                   if(player.isPlaying()){
                     player.stop();
@@ -199,7 +199,7 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
             public void onFinish() {
 
 
-              Toast.makeText(context,"Sorry but you haven't accepted booking within time limit",Toast.LENGTH_LONG);
+              Toast.makeText(context,"Sorry but you haven't accepted booking within time limit",Toast.LENGTH_LONG).show();
 
               if(player.isPlaying()){
                 player.stop();
@@ -220,7 +220,7 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
       });
 
     }else{
-      Toast.makeText(context,"bookingStatusNotMatched",Toast.LENGTH_LONG);
+      Toast.makeText(context,"bookingStatusNotMatched",Toast.LENGTH_LONG).show();
     }
     //  |-> ---------------------
     //      App in Foreground

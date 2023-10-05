@@ -8,6 +8,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -35,6 +39,10 @@ public class BookingDetailsRequest {
                         public void onResponse(JSONObject response) {
                             try {
                                 // Parse the response into the BookingDetails model class
+                                  Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                                JsonElement jsonElement = JsonParser.parseString(response.toString());
+                                String prettyJson = gson.toJson(jsonElement);
+                                System.out.println(prettyJson);
                                 BookingDetails bookingDetails = new BookingDetails();
                                 bookingDetails.parseFromJSON(response);
 

@@ -41,14 +41,15 @@ public class BookingDetailsRequest {
                                 listener.onSuccess(bookingDetails);
                             } catch (JSONException e) {
                                 e.printStackTrace();
-                                listener.onError("Error parsing JSON");
+                                listener.onError("Error creating JSON request"+e.getMessage());
                             }
                         }
                     },
                     new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            listener.onError("Error in network request");
+                           
+                            listener.onError("Error in network request"+ error.getMessage());
                         }
 
 

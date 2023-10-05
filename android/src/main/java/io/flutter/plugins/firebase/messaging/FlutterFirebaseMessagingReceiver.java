@@ -216,6 +216,7 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
         @Override
         public void onError(String errorMessage) {
           // Handle errors here
+          Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show();
         }
       });
 

@@ -102,7 +102,7 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
           final ProgressBar countDownProgress = inflater.findViewById(R.id.progressBar2);
           countDownProgress.setMax(120);
           countDownProgress.setMax(0);
-          
+
           final TextView dropOff = inflater.findViewById(R.id.dropOffText);
           final TextView pickUpAddress = inflater.findViewById(R.id.pickupAddress);
           final TextView dropOffAddress = inflater.findViewById(R.id.dropOffAddress);
@@ -127,45 +127,6 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
 
           carType.setText("Car Type : "+bookingDetails.getData().getVehicleType()+" | "+ bookingDetails.getData().getVehicleTransmissionType());
           dropOff.setText("Drop Off");
-          skip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-              Toast.makeText(context,"You have cancelled this order",Toast.LENGTH_LONG).show();
-              manager.removeView(inflater);
-              if(player.isPlaying()){
-                player.stop();
-              }
-
-            }
-          });
-
-          slideToConfirm.setOnSlideCompleteListener(new SlideToActView.OnSlideCompleteListener() {
-            @Override
-            public void onSlideComplete(@NonNull SlideToActView slideToActView) {
-              //Todo : call accept Booking api
-              BookingDetailsRequest.acceptBooking(context, remoteMessage.getData().get("recordId"), cookie, new BookingDetailsRequest.AcceptBookingListener() {
-                @Override
-                public void onSuccess() {
-                  Toast.makeText(context,"Thanks for accepting booking, check booking details inside app",Toast.LENGTH_LONG).show();
-                  manager.removeView(inflater);
-                  if(player.isPlaying()){
-                    player.stop();
-                  }
-                }
-
-                @Override
-                public void onError(String errorMessage) {
-                  slideToConfirm.resetSlider();
-                  Toast.makeText(context,"We encountered an error while accepting the booking",Toast.LENGTH_LONG).show();
-
-                  if(player.isPlaying()){
-                    player.stop();
-                  }
-                  manager.removeView(inflater);
-                }
-              });
-            }
-          });
           final CountDownTimer timer = new CountDownTimer(120000,1000) {
             @Override
             public void onTick(long l) {
@@ -184,8 +145,56 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
                 player.stop();
               }
               manager.removeView(inflater);
+              
+
             }
           };
+          skip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+              Toast.makeText(context,"You have cancelled this order",Toast.LENGTH_LONG).show();
+              manager.removeView(inflater);
+              if(player.isPlaying()){
+                player.stop();
+              }
+              timer.cancel();
+
+            }
+          });
+
+          slideToConfirm.setOnSlideCompleteListener(new SlideToActView.OnSlideCompleteListener() {
+            @Override
+            public void onSlideComplete(@NonNull SlideToActView slideToActView) {
+              //Todo : call accept Booking api
+              BookingDetailsRequest.acceptBooking(context, remoteMessage.getData().get("recordId"), cookie, new BookingDetailsRequest.AcceptBookingListener() {
+                @Override
+                public void onSuccess() {
+                  Toast.makeText(context,"Thanks for accepting booking, check booking details inside app",Toast.LENGTH_LONG).show();
+                  manager.removeView(inflater);
+
+                  if(player.isPlaying()){
+                    player.stop();
+                  }
+                  timer.cancel();
+
+                }
+
+                @Override
+                public void onError(String errorMessage) {
+                  slideToConfirm.resetSlider();
+                  Toast.makeText(context,"We encountered an error while accepting the booking",Toast.LENGTH_LONG).show();
+
+                  if(player.isPlaying()){
+                    player.stop();
+                  }
+                  manager.removeView(inflater);
+                  timer.cancel();
+
+                }
+              });
+            }
+          });
+
           player.start();
           timer.start();
           manager.addView(inflater, layoutParams);

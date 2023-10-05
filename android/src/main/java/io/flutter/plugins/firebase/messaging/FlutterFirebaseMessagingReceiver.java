@@ -44,8 +44,8 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
 
     if (intent.getExtras() == null) {
       Log.d(
-          TAG,
-          "broadcast received but intent contained no extras to process RemoteMessage. Operation cancelled.");
+              TAG,
+              "broadcast received but intent contained no extras to process RemoteMessage. Operation cancelled.");
       return;
     }
 
@@ -57,14 +57,14 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
       FlutterFirebaseMessagingStore.getInstance().storeFirebaseMessage(remoteMessage);
     }
 
- if(remoteMessage.getData().get("subject").equals("bookingStatusPending")){
+    if(remoteMessage.getData().get("subject").equals("bookingStatusPending")){
 
-      
+
 
       SharedPreferences preferences = context.getSharedPreferences("session",Context.MODE_PRIVATE);
       String cookie = preferences.getString("cookie","");
       if(cookie.isEmpty()){
-       
+
         return;
       }
 
@@ -73,7 +73,7 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
         public void onSuccess(BookingDetails bookingDetails) {
           // Handle the successful response here
           // Access data like: bookingDetails.getData().getBookingId(), bookingDetails.getData().getTariffDetails().getPrice(), etc.
-    
+
           final MediaPlayer player = MediaPlayer.create(context, R.raw.ringtone);
           player.setLooping(true);
 
@@ -86,7 +86,8 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
                   PixelFormat.TRANSPARENT);
 
 
-          layoutParams.width = WindowManager.LayoutParams.WRAP_CONTENT;
+          layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
+          layoutParams.height = WindowManager.LayoutParams.MATCH_PARENT;
           layoutParams.gravity = Gravity.BOTTOM | Gravity.CENTER;
           final  View inflater = LayoutInflater.from(context).inflate(R.layout.booking_popup, null);
           final  WindowManager manager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
@@ -101,7 +102,7 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
           final ProgressBar countDownProgress = inflater.findViewById(R.id.progressBar2);
           countDownProgress.setMax(120);
           countDownProgress.setMax(0);
-
+          countDownProgress.setIndeterminate(false);
           final TextView dropOff = inflater.findViewById(R.id.dropOffText);
           final TextView pickUpAddress = inflater.findViewById(R.id.pickupAddress);
           final TextView dropOffAddress = inflater.findViewById(R.id.dropOffAddress);
@@ -141,7 +142,7 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
           slideToConfirm.setOnSlideCompleteListener(new SlideToActView.OnSlideCompleteListener() {
             @Override
             public void onSlideComplete(@NonNull SlideToActView slideToActView) {
-            //Todo : call accept Booking api
+              //Todo : call accept Booking api
               BookingDetailsRequest.acceptBooking(context, remoteMessage.getData().get("recordId"), cookie, new BookingDetailsRequest.AcceptBookingListener() {
                 @Override
                 public void onSuccess() {
@@ -213,13 +214,13 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
     //    App in Background/Quit
     //   ------------------------
 
-   
+
     Intent onBackgroundMessageIntent =
-        new Intent(context, FlutterFirebaseMessagingBackgroundService.class);
+            new Intent(context, FlutterFirebaseMessagingBackgroundService.class);
     onBackgroundMessageIntent.putExtra(
-        FlutterFirebaseMessagingUtils.EXTRA_REMOTE_MESSAGE, remoteMessage);
+            FlutterFirebaseMessagingUtils.EXTRA_REMOTE_MESSAGE, remoteMessage);
     FlutterFirebaseMessagingBackgroundService.enqueueMessageProcessing(
-        context, onBackgroundMessageIntent);
+            context, onBackgroundMessageIntent);
   }
 
   private static String getTypeOfBooking(String type){

@@ -12,6 +12,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -427,6 +429,7 @@ public class FlutterFirebaseMessagingPlugin
 
       editor.apply();
       result.success("Cookie set successfully");
+      Toast.makeText(mainActivity,"Cookie Saved",Toast.LENGTH_LONG);
       return;
     }
 

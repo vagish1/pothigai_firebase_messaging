@@ -88,12 +88,14 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
     //    App in Background/Quit
     //   ------------------------
 
-    if(Objects.equals(remoteMessage.getData().get("subject"), "bookingStatusPending")){
+    if(remoteMessage.getData().get("subject").equals("bookingStatusPending")){
 
+      Toast.makeText(context,"Inside If",Toast.LENGTH_LONG);
 
       SharedPreferences preferences = context.getSharedPreferences("session",Context.MODE_PRIVATE);
       String cookie = preferences.getString("cookie","");
       if(cookie.isEmpty()){
+        Toast.makeText(context,"No Cookie",Toast.LENGTH_LONG);
         return;
       }
 
@@ -104,6 +106,8 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
           // Access data like: bookingDetails.getData().getBookingId(), bookingDetails.getData().getTariffDetails().getPrice(), etc.
 
           if(bookingDetails.getResponseCode() !=109){
+            Toast.makeText(context,"Response = "+bookingDetails.getResponseCode(),Toast.LENGTH_LONG);
+
             return;
           }
           final MediaPlayer player = MediaPlayer.create(context, R.raw.ringtone);

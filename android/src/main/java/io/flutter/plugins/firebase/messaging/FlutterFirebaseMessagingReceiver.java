@@ -92,7 +92,7 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
         public void onSuccess(BookingDetails bookingDetails) {
           // Handle the successful response here
           // Access data like: bookingDetails.getData().getBookingId(), bookingDetails.getData().getTariffDetails().getPrice(), etc.
-
+          Toast.makeText(context, "Api Call Done", Toast.LENGTH_SHORT).show();
           if(bookingDetails.getResponseCode() !=109){
             Toast.makeText(context,"Response = "+bookingDetails.getResponseCode(),Toast.LENGTH_LONG).show();
 

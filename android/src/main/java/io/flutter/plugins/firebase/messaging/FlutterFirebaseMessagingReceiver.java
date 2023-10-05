@@ -12,6 +12,7 @@ import android.graphics.PixelFormat;
 import android.media.MediaPlayer;
 import android.os.CountDownTimer;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,34 +20,14 @@ import android.view.WindowManager;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
-
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.JsonRequest;
-import com.android.volley.toolbox.Volley;
-import com.google.android.gms.common.api.Response;
 import com.google.firebase.messaging.RemoteMessage;
-import com.google.gson.Gson;
-import com.google.gson.internal.LinkedTreeMap;
 import com.ncorti.slidetoact.SlideToActView;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.TimeZone;
-import java.util.Timer;
-import java.util.TimerTask;
-
 import Models.BookingDetails;
 import api.BookingDetailsRequest;
 

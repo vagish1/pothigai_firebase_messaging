@@ -78,12 +78,12 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
 
  if(remoteMessage.getData().get("subject").equals("bookingStatusPending")){
 
-      Toast.makeText(context,"Inside If",Toast.LENGTH_LONG).show();
+      
 
       SharedPreferences preferences = context.getSharedPreferences("session",Context.MODE_PRIVATE);
       String cookie = preferences.getString("cookie","");
       if(cookie.isEmpty()){
-        Toast.makeText(context,"No Cookie",Toast.LENGTH_LONG).show();
+       
         return;
       }
 
@@ -92,16 +92,9 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
         public void onSuccess(BookingDetails bookingDetails) {
           // Handle the successful response here
           // Access data like: bookingDetails.getData().getBookingId(), bookingDetails.getData().getTariffDetails().getPrice(), etc.
-          Toast.makeText(context, "Api Call Done", Toast.LENGTH_SHORT).show();
-          System.out.println(bookingDetails.getResponseCode()+"");
-//          if(bookingDetails.getResponseCode() !=109){
-//            Toast.makeText(context,"Response = "+bookingDetails.getResponseCode(),Toast.LENGTH_LONG).show();
-//
-//            return;
-//          }
+    
           final MediaPlayer player = MediaPlayer.create(context, R.raw.ringtone);
-
-
+          player.setLooping(true);
 
           final  WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams(
                   ViewGroup.LayoutParams.MATCH_PARENT,
@@ -111,6 +104,9 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
                   WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL,
                   PixelFormat.TRANSPARENT);
 
+
+          layoutParams.width = WindowManager.LayoutParams.WRAP_CONTENT;
+          layoutParams.gravity = Gravity.BOTTOM | Gravity.CENTER;
           final  View inflater = LayoutInflater.from(context).inflate(R.layout.booking_popup, null);
           final  WindowManager manager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
 

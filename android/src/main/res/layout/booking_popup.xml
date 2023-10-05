@@ -394,32 +394,25 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/constraintLayout"
-        app:cardBackgroundColor="@color/progressBg"
-        app:elevation="0dp"
-        app:cardCornerRadius="60dp"
-        >
 
       <androidx.constraintlayout.widget.ConstraintLayout
           android:layout_width="wrap_content"
-          android:layout_height="wrap_content">
+          android:layout_height="wrap_content"
+          app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="@+id/constraintLayout"
+          android:background="@drawable/circle">
 
           <ProgressBar
               android:id="@+id/progressBar2"
 
-              style="?android:attr/progressBarStyle"
+              android:padding="0px"
               android:layout_width="100dp"
               android:layout_height="100dp"
-              
               android:indeterminateOnly="false"
-              android:indeterminateTint="@color/successGreen"
-              android:progress="30"
+              android:progressDrawable="@drawable/progress_drawable"
+              tools:progress="30"
               app:layout_constraintBottom_toBottomOf="parent"
               app:layout_constraintEnd_toEndOf="parent"
               app:layout_constraintStart_toStartOf="parent"
@@ -442,7 +435,6 @@
           </TextView>
       </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.cardview.widget.CardView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

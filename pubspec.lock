@@ -174,7 +174,7 @@ packages:
     description:
       path: "."
       ref: main
-      resolved-ref: "50fcb0fc1d245ef329609f809acb7485efac89ae"
+      resolved-ref: "23465efedfd1fbe7822d7766d321b9ea32d5f2e3"
       url: "https://github.com/vagish1/pothigai_firebase_messaging_platform_interface.git"
     source: git
     version: "4.5.8"

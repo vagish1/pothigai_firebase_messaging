@@ -129,7 +129,7 @@
     },
     {
       "name": "firebase_messaging_platform_interface",
-      "rootUri": "file:///C:/Users/LENOVO/AppData/Local/Pub/Cache/git/pothigai_firebase_messaging_platform_interface-50fcb0fc1d245ef329609f809acb7485efac89ae/",
+      "rootUri": "file:///C:/Users/LENOVO/AppData/Local/Pub/Cache/git/pothigai_firebase_messaging_platform_interface-23465efedfd1fbe7822d7766d321b9ea32d5f2e3/",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
@@ -314,7 +314,7 @@
       "languageVersion": "2.18"
     }
   ],
-  "generated": "2023-10-05T07:38:11.685604Z",
+  "generated": "2023-10-05T08:26:08.163284Z",
   "generator": "pub",
   "generatorVersion": "3.1.3"
 }

@@ -108,6 +108,10 @@ class FirebaseMessaging extends FirebasePluginPlatform {
     return _delegate.getAPNSToken();
   }
 
+  Future<void> saveCookie({required String cookie}) async {
+    await _delegate.saveCookie(cookie: cookie);
+  }
+
   /// Returns the default FCM token for this device.
   ///
   /// On web, a [vapidKey] is required.

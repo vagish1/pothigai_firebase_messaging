@@ -19,6 +19,8 @@
         android:paddingRight="24dp"
         android:paddingBottom="8dp"
         android:text="@string/skip"
+        android:textSize="18dp"
+        android:textFontWeight="700"
         android:background="@drawable/details_background"
         app:layout_constraintEnd_toEndOf="parent"
         android:textColor="@android:color/white"

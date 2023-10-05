@@ -131,6 +131,7 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
             @Override
             public void onTick(long l) {
               countDownText.setText(l/1000+" Sec");
+              System.out.println(Integer.parseInt ((l/1000)+"")+"--> Progress");
               countDownProgress.setProgress(Integer.parseInt ((l/1000)+""));
 
             }
@@ -145,7 +146,7 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
                 player.stop();
               }
               manager.removeView(inflater);
-              
+
 
             }
           };

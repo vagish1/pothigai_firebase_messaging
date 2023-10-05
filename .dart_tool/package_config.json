@@ -129,13 +129,13 @@
     },
     {
       "name": "firebase_messaging_platform_interface",
-      "rootUri": "file:///C:/Users/LENOVO/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_messaging_platform_interface-4.5.8",
+      "rootUri": "file:///C:/Users/LENOVO/AppData/Local/Pub/Cache/git/pothigai_firebase_messaging_platform_interface-50fcb0fc1d245ef329609f809acb7485efac89ae/",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
     {
       "name": "firebase_messaging_web",
-      "rootUri": "file:///C:/Users/LENOVO/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_messaging_web-3.5.8",
+      "rootUri": "file:///C:/Users/LENOVO/AppData/Local/Pub/Cache/git/pothigai_firebase_messaging_web-c74e4cfbb70e27f3877ac1ee51e660004daadc34/",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
@@ -314,7 +314,7 @@
       "languageVersion": "2.18"
     }
   ],
-  "generated": "2023-10-05T07:05:45.771670Z",
+  "generated": "2023-10-05T07:38:11.685604Z",
   "generator": "pub",
   "generatorVersion": "3.1.3"
 }

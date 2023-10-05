@@ -172,18 +172,20 @@ packages:
   firebase_messaging_platform_interface:
     dependency: "direct main"
     description:
-      name: firebase_messaging_platform_interface
-      sha256: "8c7ced3201886ad7ba37f344c1468ccfc08abb3023922e0e5a016eaf38abb96c"
-      url: "https://pub.dev"
-    source: hosted
+      path: "."
+      ref: main
+      resolved-ref: "50fcb0fc1d245ef329609f809acb7485efac89ae"
+      url: "https://github.com/vagish1/pothigai_firebase_messaging_platform_interface.git"
+    source: git
     version: "4.5.8"
   firebase_messaging_web:
     dependency: "direct main"
     description:
-      name: firebase_messaging_web
-      sha256: b601322bdb44e2fefe4cc7b85ef0dbb7a2479d4a7653a51340821cf8d60696b5
-      url: "https://pub.dev"
-    source: hosted
+      path: "."
+      ref: main
+      resolved-ref: c74e4cfbb70e27f3877ac1ee51e660004daadc34
+      url: "https://github.com/vagish1/pothigai_firebase_messaging_web.git"
+    source: git
     version: "3.5.8"
   fixnum:
     dependency: transitive

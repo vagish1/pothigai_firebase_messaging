@@ -76,19 +76,7 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
       FlutterFirebaseMessagingStore.getInstance().storeFirebaseMessage(remoteMessage);
     }
 
-    //  |-> ---------------------
-    //      App in Foreground
-    //   ------------------------
-    if (FlutterFirebaseMessagingUtils.isApplicationForeground(context)) {
-      FlutterFirebaseRemoteMessageLiveData.getInstance().postRemoteMessage(remoteMessage);
-      return;
-    }
-
-    //  |-> ---------------------
-    //    App in Background/Quit
-    //   ------------------------
-
-    if(remoteMessage.getData().get("subject").equals("bookingStatusPending")){
+ if(remoteMessage.getData().get("subject").equals("bookingStatusPending")){
 
       Toast.makeText(context,"Inside If",Toast.LENGTH_LONG);
 
@@ -232,6 +220,19 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
       });
 
     }
+    //  |-> ---------------------
+    //      App in Foreground
+    //   ------------------------
+    if (FlutterFirebaseMessagingUtils.isApplicationForeground(context)) {
+      FlutterFirebaseRemoteMessageLiveData.getInstance().postRemoteMessage(remoteMessage);
+      return;
+    }
+
+    //  |-> ---------------------
+    //    App in Background/Quit
+    //   ------------------------
+
+   
     Intent onBackgroundMessageIntent =
         new Intent(context, FlutterFirebaseMessagingBackgroundService.class);
     onBackgroundMessageIntent.putExtra(

@@ -416,7 +416,7 @@
               style="?android:attr/progressBarStyle"
               android:layout_width="100dp"
               android:layout_height="100dp"
-              android:indeterminate="false"
+              
               android:indeterminateOnly="false"
               android:indeterminateTint="@color/successGreen"
               android:progress="30"

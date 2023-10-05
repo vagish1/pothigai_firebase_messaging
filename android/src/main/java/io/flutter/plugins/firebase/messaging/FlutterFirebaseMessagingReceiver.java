@@ -102,7 +102,7 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
           final ProgressBar countDownProgress = inflater.findViewById(R.id.progressBar2);
           countDownProgress.setMax(120);
           countDownProgress.setMax(0);
-          countDownProgress.setIndeterminate(false);
+          
           final TextView dropOff = inflater.findViewById(R.id.dropOffText);
           final TextView pickUpAddress = inflater.findViewById(R.id.pickupAddress);
           final TextView dropOffAddress = inflater.findViewById(R.id.dropOffAddress);

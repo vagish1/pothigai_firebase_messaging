@@ -209,8 +209,6 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
         }
       });
 
-    }else{
-      Toast.makeText(context,"bookingStatusNotMatched",Toast.LENGTH_LONG).show();
     }
     //  |-> ---------------------
     //      App in Foreground

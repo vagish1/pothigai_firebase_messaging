@@ -408,7 +408,7 @@
 
           <ProgressBar
               android:id="@+id/progressBar2"
-
+              style="@style/CircularDeterminateProgressBar"
               android:padding="0px"
               android:layout_width="100dp"
               android:layout_height="100dp"

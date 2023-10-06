@@ -378,9 +378,9 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
-                        <View
+                        <androidx.constraintlayout.widget.ConstraintLayout
                             android:id="@+id/divider3"
-                            android:layout_width="1dp"
+                            android:layout_width="2dp"
                             android:layout_height="0dp"
                             android:layout_marginTop="10dp"
                             android:background="@drawable/dotted"
@@ -398,44 +398,59 @@
 
 
       <androidx.constraintlayout.widget.ConstraintLayout
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
+          android:layout_width="100dp"
+          android:layout_height="100dp"
           app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toTopOf="@+id/constraintLayout"
           android:background="@drawable/circle">
 
-          <ProgressBar
+          <antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator
               android:id="@+id/progressBar2"
-              style="@style/CircularDeterminateProgressBar"
-              android:padding="0px"
               android:layout_width="100dp"
               android:layout_height="100dp"
-              android:indeterminateOnly="false"
-              android:progressDrawable="@drawable/progress_drawable"
-              tools:progress="80"
-              android:max="120"
+              android:layout_gravity="center"
+              android:layout_marginBottom="8dp"
+              android:layout_marginTop="8dp"
+              app:dotColor="@color/successGreen"
+              app:enableProgressAnimation="true"
+              app:textColor="@android:color/black"
+              
               app:layout_constraintBottom_toBottomOf="parent"
               app:layout_constraintEnd_toEndOf="parent"
               app:layout_constraintStart_toStartOf="parent"
-              app:layout_constraintTop_toTopOf="parent" />
+              app:layout_constraintTop_toTopOf="parent"/>
+<!--          <ProgressBar-->
+<!--              android:id="@+id/progressBar2"-->
+<!--              style="@style/CircularDeterminateProgressBar"-->
+<!--              android:padding="0px"-->
+<!--              android:layout_width="100dp"-->
+<!--              android:layout_height="100dp"-->
+<!--              android:indeterminateOnly="false"-->
+<!--              android:progressDrawable="@drawable/progress_drawable"-->
+<!--              tools:progress="80"-->
+<!--              android:max="120"-->
+<!--              app:layout_constraintBottom_toBottomOf="parent"-->
+<!--              app:layout_constraintEnd_toEndOf="parent"-->
+<!--              app:layout_constraintStart_toStartOf="parent"-->
+<!--              app:layout_constraintTop_toTopOf="parent" />-->
 
-          <TextView
-              android:id="@+id/countDownText"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:fontFamily="@font/opensans"
-              android:text="120 Sec"
+<!--          <TextView-->
+<!--              android:id="@+id/countDownText"-->
+<!--              android:layout_width="wrap_content"-->
+<!--              android:layout_height="wrap_content"-->
+<!--              android:fontFamily="@font/opensans"-->
+<!--              android:text="120 Sec"-->
 
-              android:textColor="@color/black"
-              android:textSize="14sp"
-              app:layout_constraintBottom_toBottomOf="@+id/progressBar2"
-              app:layout_constraintEnd_toEndOf="parent"
-              app:layout_constraintStart_toStartOf="parent"
-              app:layout_constraintTop_toTopOf="@+id/progressBar2">
+<!--              android:textColor="@color/black"-->
+<!--              android:textSize="14sp"-->
+<!--              app:layout_constraintBottom_toBottomOf="@+id/progressBar2"-->
+<!--              app:layout_constraintEnd_toEndOf="parent"-->
+<!--              app:layout_constraintStart_toStartOf="parent"-->
+<!--              app:layout_constraintTop_toTopOf="@+id/progressBar2">-->
 
-          </TextView>
+<!--          </TextView>-->
       </androidx.constraintlayout.widget.ConstraintLayout>
 
 

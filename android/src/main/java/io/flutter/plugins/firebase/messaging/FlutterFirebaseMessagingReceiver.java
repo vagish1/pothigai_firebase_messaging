@@ -29,6 +29,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.TimeZone;
 import Models.BookingDetails;
+import antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator;
 import api.BookingDetailsRequest;
 
 public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
@@ -94,14 +95,14 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
 
 
           final TextView travellingDistance = inflater.findViewById(R.id.travellingDistance);
-          final TextView countDownText = inflater.findViewById(R.id.countDownText);
+
           final TextView duration = inflater.findViewById(R.id.textView3);
           final TextView price = inflater.findViewById(R.id.travellingPrice);
           final TextView skip = inflater.findViewById(R.id.textView);
           final TextView carType = inflater.findViewById(R.id.textView4);
-          final ProgressBar countDownProgress = inflater.findViewById(R.id.progressBar2);
-          countDownProgress.setMax(120);
-          countDownProgress.setMax(0);
+          final CircularProgressIndicator countDownProgress = inflater.findViewById(R.id.progressBar2);
+          countDownProgress.setMaxProgress(120);
+
 
           final TextView dropOff = inflater.findViewById(R.id.dropOffText);
           final TextView pickUpAddress = inflater.findViewById(R.id.pickupAddress);
@@ -130,9 +131,8 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
           final CountDownTimer timer = new CountDownTimer(120000,1000) {
             @Override
             public void onTick(long l) {
-              countDownText.setText(l/1000+" Sec");
-              System.out.println(Integer.parseInt ((l/1000)+"")+"--> Progress");
-              countDownProgress.setProgress(Integer.parseInt ((l/1000)+""));
+              
+              countDownProgress.setProgress(l/1000,120);
 
             }
 

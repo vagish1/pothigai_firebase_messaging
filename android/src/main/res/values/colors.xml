@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="popup_bg"> #000000D9 </color>
+    <color name="popup_bg"> #06381c </color>
     <color name="cardColor">#F8f8f8</color>
     <color name="progressBg">#FFFFFF</color>
     <color name="black">#000</color>
     <color name="detailsBg">#202123</color>
     <color name="address">#868686</color>
-    <color name="pickUpTimeBg">#F1F7FF</color>
+    <color name="pickUpTimeBg">#B9F4E5</color>
     <color name="successGreen">#27CA4B</color>
     <color name="red">#F44336</color>
 </resources>

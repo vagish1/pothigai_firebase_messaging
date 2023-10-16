@@ -4,7 +4,7 @@
 
 
     </corners>
-<solid android:color="@color/detailsBg"></solid>
+<solid android:color="@color/successGreen"></solid>
 
 
 </shape>

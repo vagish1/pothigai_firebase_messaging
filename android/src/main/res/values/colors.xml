@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="popup_bg"> #000000D9 </color>
+    <color name="popup_bg">#63000000</color>
     <color name="cardColor">#F8f8f8</color>
     <color name="progressBg">#FFFFFF</color>
     <color name="black">#000</color>

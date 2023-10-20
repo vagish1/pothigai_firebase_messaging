@@ -4,6 +4,7 @@
 
 package io.flutter.plugins.firebase.messaging;
 
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -70,6 +71,7 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
       }
 
       BookingDetailsRequest.getBookingDetails(context, remoteMessage.getData().get("recordId"), cookie, new BookingDetailsRequest.BookingDetailsListener() {
+        @SuppressLint("SetTextI18n")
         @Override
         public void onSuccess(BookingDetails bookingDetails) {
           // Handle the successful response here
@@ -113,7 +115,7 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
 
 
           travellingDistance.setText(getTypeOfBooking(bookingDetails.getData().getTypeOfBooking()));
-          duration.setText(bookingDetails.getData().getTariffDetails().getNoOfDays() + " Days");
+          duration.setText(getDuration(bookingDetails.getData().getTypeOfBooking(),bookingDetails.getData().getTariffDetails().getNoOfDays()));
 
           price.setText("₹ " +bookingDetails.getData().getEstimatedAmount());
 
@@ -124,14 +126,14 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
           SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy hh:mm aa", Locale.getDefault());
           formatter.setTimeZone(TimeZone.getDefault());
 
-          pickupDateAndTypeOfTrip.setText(bookingDetails.getData().getTripType()+" "+formatter.format(date).toString());
+          pickupDateAndTypeOfTrip.setText(bookingDetails.getData().getTripType()+" "+ formatter.format(date));
 
           carType.setText("Car Type : "+bookingDetails.getData().getVehicleType()+" | "+ bookingDetails.getData().getVehicleTransmissionType());
           dropOff.setText("Drop Off");
           final CountDownTimer timer = new CountDownTimer(120000,1000) {
             @Override
             public void onTick(long l) {
-              
+
               countDownProgress.setProgress(l/1000,120);
 
             }
@@ -232,16 +234,23 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
   }
 
   private static String getTypeOfBooking(String type){
-    if(type.equals("localTrip")){
+    if(type.equals("cityLimit")){
       return "Local Trip";
     }
 
-    if(type.equals("longDistance")){
+    if(type.equals("outskirt")){
       return "Long Distance";
     }
 
     return "Outstation";
 
+  }
+
+  private static  String getDuration(String type, int duration){
+    if(type.equals("outstation")){
+        return duration+" Days";
+    }
+    return duration+" Hours";
   }
 
 

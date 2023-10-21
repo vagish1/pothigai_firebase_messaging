@@ -24,6 +24,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import com.google.firebase.messaging.RemoteMessage;
 import com.ncorti.slidetoact.SlideToActView;
+
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -280,7 +282,9 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
 
     // Calculate the distance
     double distance = RADIUS_OF_EARTH * c;
+    DecimalFormat df = new DecimalFormat("#.#");
+    distance = Double.parseDouble(df.format(distance));
 
-    return distance;
+    return Math.round( distance);
   }
 }

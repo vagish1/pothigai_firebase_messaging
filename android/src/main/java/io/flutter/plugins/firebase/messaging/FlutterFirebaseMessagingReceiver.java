@@ -36,6 +36,7 @@ import api.BookingDetailsRequest;
 public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
   private static final String TAG = "FLTFireMsgReceiver";
   static HashMap<String, RemoteMessage> notifications = new HashMap<>();
+  private static double RADIUS_OF_EARTH = 6371;
 
   @Override
   public void onReceive(Context context, Intent intent) {
@@ -120,7 +121,8 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
           price.setText("₹ " +bookingDetails.getData().getEstimatedAmount());
 
           pickUpAddress.setText(bookingDetails.getData().getPickupLocation().getFragmentedAddress());
-          dropOffAddress.setText(bookingDetails.getData().getDestinationLocation().getFragmentedAddress());
+          dropOffAddress.setText(bookingDetails.getData().getDestinationLocation().getFragmentedAddress()+" | "+calculateDistance(bookingDetails.getData().getPickupLocation().getCoordinates()[1],bookingDetails.getData().getPickupLocation().getCoordinates()[0],bookingDetails.getData().getDestinationLocation().getCoordinates()[1],bookingDetails.getData().getDestinationLocation().getCoordinates()[1])+" Km");
+
 
           Date date = new Date(bookingDetails.getData().getPickupDateTime() * 1000);
           SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy hh:mm aa", Locale.getDefault());
@@ -254,7 +256,23 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
   }
 
 
+  public static double calculateDistance(double lat1, double lon1, double lat2, double lon2) {
+    // Convert latitude and longitude from degrees to radians
+    double lat1Rad = Math.toRadians(lat1);
+    double lon1Rad = Math.toRadians(lon1);
+    double lat2Rad = Math.toRadians(lat2);
+    double lon2Rad = Math.toRadians(lon2);
 
+    // Haversine formula
+    double dLat = lat2Rad - lat1Rad;
+    double dLon = lon2Rad - lon1Rad;
 
+    double a = Math.pow(Math.sin(dLat / 2), 2) + Math.cos(lat1Rad) * Math.cos(lat2Rad) * Math.pow(Math.sin(dLon / 2), 2);
+    double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
+    // Calculate the distance
+    double distance = RADIUS_OF_EARTH * c;
+
+    return distance;
+  }
 }

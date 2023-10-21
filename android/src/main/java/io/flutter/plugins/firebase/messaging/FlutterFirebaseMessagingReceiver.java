@@ -129,7 +129,7 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
           }
 
           pickUpAddress.setText(bookingDetails.getData().getPickupLocation().getFragmentedAddress());
-          dropOffAddress.setText(bookingDetails.getData().getDestinationLocation().getFragmentedAddress());
+          dropOffAddress.setText(bookingDetails.getData().getDestinationLocation().getFragmentedAddress()+" | "+calculateDistance(bookingDetails.getData().getPickupLocation().getCoordinates()[1],bookingDetails.getData().getPickupLocation().getCoordinates()[0],bookingDetails.getData().getDestinationLocation().getCoordinates()[1],bookingDetails.getData().getDestinationLocation().getCoordinates()[1])+" Km");
 
 
           Date date = new Date(bookingDetails.getData().getPickupDateTime() * 1000);

@@ -75,9 +75,8 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
         @SuppressLint("SetTextI18n")
         @Override
         public void onSuccess(BookingDetails bookingDetails) {
-          // Handle the successful response here
-          // Access data like: bookingDetails.getData().getBookingId(), bookingDetails.getData().getTariffDetails().getPrice(), etc.
 
+          Log.d("Response", bookingDetails.toString());
           final MediaPlayer player = MediaPlayer.create(context, R.raw.ringtone);
           player.setLooping(true);
 

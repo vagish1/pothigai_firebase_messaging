@@ -118,6 +118,15 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
           duration.setText(getDuration(bookingDetails.getData().getTypeOfBooking(),bookingDetails.getData().getTariffDetails().getNoOfDays()));
 
           price.setText("₹ " +bookingDetails.getData().getEstimatedAmount());
+          try{
+            System.out.println(bookingDetails.getData().getPickupLocation().getCoordinates()[1]);
+            System.out.println(bookingDetails.getData().getPickupLocation().getCoordinates()[0]);
+            System.out.println(bookingDetails.getData().getDestinationLocation().getCoordinates()[1]);
+            System.out.println(bookingDetails.getData().getDestinationLocation().getCoordinates()[1]);
+          }catch (NullPointerException e){
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+          }
 
           pickUpAddress.setText(bookingDetails.getData().getPickupLocation().getFragmentedAddress());
           dropOffAddress.setText(bookingDetails.getData().getDestinationLocation().getFragmentedAddress());

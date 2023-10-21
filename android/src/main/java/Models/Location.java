@@ -9,13 +9,17 @@ public class Location {
     private double[] coordinates;
     private String fragmentedAddress;
 
-    // Getter and Setter methods
-
     public void parseFromJSON(JSONObject jsonObject) throws JSONException {
         type = jsonObject.optString("type");
-        JSONArray coordinatesArray = jsonObject.optJSONArray("coordinates");
-        if (coordinatesArray != null && coordinatesArray.length() == 2) {
-            coordinates = new double[]{coordinatesArray.optDouble(0), coordinatesArray.optDouble(1)};
+
+        JSONObject locationObject = jsonObject.optJSONObject("location");
+        if (locationObject != null) {
+            JSONArray coordinatesArray = locationObject.optJSONArray("coordinates");
+            if (coordinatesArray != null && coordinatesArray.length() == 2) {
+                coordinates = new double[2];
+                coordinates[0] = coordinatesArray.optDouble(0, 0.0);
+                coordinates[1] = coordinatesArray.optDouble(1, 0.0);
+            }
         }
         fragmentedAddress = jsonObject.optString("fragmentedAddress");
     }

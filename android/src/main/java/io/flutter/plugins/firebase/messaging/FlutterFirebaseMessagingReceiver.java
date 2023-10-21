@@ -129,7 +129,7 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
           }
 
           pickUpAddress.setText(bookingDetails.getData().getPickupLocation().getFragmentedAddress());
-          dropOffAddress.setText(bookingDetails.getData().getDestinationLocation().getFragmentedAddress()+" | "+calculateDistance(bookingDetails.getData().getPickupLocation().getCoordinates()[1],bookingDetails.getData().getPickupLocation().getCoordinates()[0],bookingDetails.getData().getDestinationLocation().getCoordinates()[1],bookingDetails.getData().getDestinationLocation().getCoordinates()[1])+" Km");
+          dropOffAddress.setText(bookingDetails.getData().getDestinationLocation().getFragmentedAddress());
 
 
           Date date = new Date(bookingDetails.getData().getPickupDateTime() * 1000);
@@ -139,7 +139,7 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
           pickupDateAndTypeOfTrip.setText(bookingDetails.getData().getTripType()+" "+ formatter.format(date));
 
           carType.setText("Car Type : "+bookingDetails.getData().getVehicleType()+" | "+ bookingDetails.getData().getVehicleTransmissionType());
-          dropOff.setText("Drop Off");
+          dropOff.setText("Drop Off" + " | "+calculateDistance(bookingDetails.getData().getPickupLocation().getCoordinates()[1],bookingDetails.getData().getPickupLocation().getCoordinates()[0],bookingDetails.getData().getDestinationLocation().getCoordinates()[1],bookingDetails.getData().getDestinationLocation().getCoordinates()[1])+" Km");
           final CountDownTimer timer = new CountDownTimer(120000,1000) {
             @Override
             public void onTick(long l) {

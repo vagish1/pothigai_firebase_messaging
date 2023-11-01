@@ -17,8 +17,8 @@ public class TariffDetails {
     // Getter and Setter methods
 
     public void parseFromJSON(JSONObject jsonObject) throws JSONException {
-        cancellationDetails = new CancellationDetails();
-        cancellationDetails.parseFromJSON(jsonObject.optJSONObject("cancellationDetails"));
+        // cancellationDetails = new CancellationDetails();
+        // cancellationDetails.parseFromJSON(jsonObject.optJSONObject("cancellationDetails"));
 
         nightFare = new NightFare();
         nightFare.parseFromJSON(jsonObject.optJSONObject("nightFare"));

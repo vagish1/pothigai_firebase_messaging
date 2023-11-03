@@ -138,7 +138,7 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
 
 
 
-            pickupDateAndTypeOfTrip.setText(bookingDetails.getData().getTripType()+" Please proceed to the customer's location immediately.");
+            pickupDateAndTypeOfTrip.setText(bookingDetails.getData().getTripType()+" , Please proceed to the customer's location immediately.");
             pickupDateAndTypeOfTrip.setTypeface(Typeface.DEFAULT_BOLD);
 
           }else{
@@ -147,7 +147,7 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
             formatter.setTimeZone(TimeZone.getDefault());
 
 
-            pickupDateAndTypeOfTrip.setText(bookingDetails.getData().getTripType()+" "+ formatter.format(date));
+            pickupDateAndTypeOfTrip.setText(bookingDetails.getData().getTripType()+" : "+ formatter.format(date));
           }
 
 

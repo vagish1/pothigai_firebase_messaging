@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.PixelFormat;
+import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.os.CountDownTimer;
 import android.util.Log;
@@ -133,15 +134,26 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
           pickUpAddress.setText(bookingDetails.getData().getPickupLocation().getFragmentedAddress());
           dropOffAddress.setText(bookingDetails.getData().getDestinationLocation().getFragmentedAddress());
 
+          if(bookingDetails.getData().getPickupDateTime() ==0){
 
-          Date date = new Date(bookingDetails.getData().getPickupDateTime() * 1000);
-          SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy hh:mm aa", Locale.getDefault());
-          formatter.setTimeZone(TimeZone.getDefault());
 
-          pickupDateAndTypeOfTrip.setText(bookingDetails.getData().getTripType()+" "+ formatter.format(date));
+
+            pickupDateAndTypeOfTrip.setText(bookingDetails.getData().getTripType()+" Please proceed to the customer's location immediately.");
+            pickupDateAndTypeOfTrip.setTypeface(Typeface.DEFAULT_BOLD);
+
+          }else{
+            Date date = new Date(bookingDetails.getData().getPickupDateTime() * 1000);
+            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy hh:mm aa", Locale.getDefault());
+            formatter.setTimeZone(TimeZone.getDefault());
+
+
+            pickupDateAndTypeOfTrip.setText(bookingDetails.getData().getTripType()+" "+ formatter.format(date));
+          }
+
+
 
           carType.setText("Car Type : "+bookingDetails.getData().getVehicleType()+" | "+ bookingDetails.getData().getVehicleTransmissionType());
-          dropOff.setText("Drop Off" + " | "+calculateDistance(bookingDetails.getData().getPickupLocation().getCoordinates()[1],bookingDetails.getData().getPickupLocation().getCoordinates()[0],bookingDetails.getData().getDestinationLocation().getCoordinates()[1],bookingDetails.getData().getDestinationLocation().getCoordinates()[0])+" Km");
+          dropOff.setText("Drop Off" + " | "+calculateDistance(bookingDetails.getData().getPickupLocation().getCoordinates()[1],bookingDetails.getData().getPickupLocation().getCoordinates()[0],bookingDetails.getData().getDestinationLocation().getCoordinates()[1],bookingDetails.getData().getDestinationLocation().getCoordinates()[1])+" Km");
           final CountDownTimer timer = new CountDownTimer(120000,1000) {
             @Override
             public void onTick(long l) {

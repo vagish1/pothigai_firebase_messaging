@@ -298,8 +298,10 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
                     cos(_toRadians(lat1)) *
                     cos(_toRadians(lat2));
     double c = 2 * asin(sqrt(a));
+    DecimalFormat decimalFormat = new DecimalFormat("#.##"); // Format to two decimal places
+    String formattedDistance = decimalFormat.format(distance);
 
-    return earthRadius * c;
+    return formattedDistance +" KM";
   }
 
   static double _toRadians(double degree) {

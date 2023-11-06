@@ -258,11 +258,11 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
   }
 
   private static String getTypeOfBooking(String type){
-    if(type.equals("cityLimit")){
+    if(type.equalsIgnoreCase("cityLimit")){
       return "Local Trip";
     }
 
-    if(type.equals("outskirt")){
+    if(type.equalsIgnoreCase("outskirt")){
       return "Long Distance";
     }
 

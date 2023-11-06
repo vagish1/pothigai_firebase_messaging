@@ -19,7 +19,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
@@ -31,6 +30,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.TimeZone;
 import Models.BookingDetails;
 import antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator;
@@ -118,7 +118,7 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
 
 
           travellingDistance.setText(getTypeOfBooking(bookingDetails.getData().getTypeOfBooking()));
-          duration.setText(getDuration(bookingDetails.getData().getTypeOfBooking(),bookingDetails.getData().getTariffDetails().getNoOfDays()));
+          duration.setText(getDuration(bookingDetails.getData().getTypeOfBooking(),bookingDetails.getData().getTariffDetails().getNoOfDays(), bookingDetails.getData().getTariffDetails().getTimeInHours()));
 
           price.setText("₹ " +bookingDetails.getData().getEstimatedAmount());
           try{
@@ -270,11 +270,11 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
 
   }
 
-  private static  String getDuration(String type, int duration){
-    if(type.equals("outstation")){
+  private static  String getDuration(String type, int duration, int timeInHours){
+    if(Objects.equals(type.toLowerCase(), "outstation")){
         return duration+" Days";
     }
-    return duration+" Hours";
+    return timeInHours+" Hours";
   }
 
 

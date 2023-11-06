@@ -284,7 +284,7 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
   }
 
 
-  public static double calculateDistance(double lat1, double lon1, double lat2, double lon2) {
+   public static double calculateDistance(double lat1, double lon1, double lat2, double lon2) {
     // Convert latitude and longitude from degrees to radians
 
 
@@ -298,10 +298,12 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
                     cos(_toRadians(lat1)) *
                     cos(_toRadians(lat2));
     double c = 2 * asin(sqrt(a));
+
+    double distance = earthRadius * c;
     DecimalFormat decimalFormat = new DecimalFormat("#.##"); // Format to two decimal places
     String formattedDistance = decimalFormat.format(distance);
 
-    return formattedDistance +" KM";
+    return Double.parseDouble(formattedDistance);
   }
 
   static double _toRadians(double degree) {

@@ -299,7 +299,7 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
                     cos(_toRadians(lat2));
     double c = 2 * asin(sqrt(a));
 
-    double distance = earthRadius * c;
+    double distance = (earthRadius * c)/1000;
     DecimalFormat decimalFormat = new DecimalFormat("#.##"); // Format to two decimal places
     String formattedDistance = decimalFormat.format(distance);
 

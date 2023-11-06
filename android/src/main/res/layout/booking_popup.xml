@@ -214,19 +214,21 @@
                     android:layout_height="wrap_content"
 
                     android:elevation="6dp"
+                    android:fontFamily="@font/opensans"
                     app:icon_margin="8dp"
                     app:inner_color="@color/successGreen"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+
                     app:layout_constraintStart_toStartOf="parent"
 
                     app:layout_constraintTop_toBottomOf="@+id/cardView"
-
                     app:outer_color="@android:color/white"
-                    app:slider_height="55dp"
 
+                    app:slider_height="55dp"
                     app:text="@string/swipeS"
-                    app:text_color="#000000">
+                    app:text_color="#000000"
+                    app:text_style="bold">
 
                 </com.ncorti.slidetoact.SlideToActView>
 

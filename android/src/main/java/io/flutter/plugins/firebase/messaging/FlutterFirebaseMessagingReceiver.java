@@ -4,6 +4,12 @@
 
 package io.flutter.plugins.firebase.messaging;
 
+import static java.lang.Math.asin;
+import static java.lang.Math.cos;
+import static java.lang.Math.pow;
+import static java.lang.Math.sin;
+import static java.lang.Math.sqrt;
+
 import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -280,14 +286,23 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
 
   public static double calculateDistance(double lat1, double lon1, double lat2, double lon2) {
     // Convert latitude and longitude from degrees to radians
-    double dLat = Math.toRadians(lat2 - lat1);
-    double dLon = Math.toRadians(lon2 - lon1);
-    double a = Math.pow(Math.sin(dLat / 2), 2) + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) * Math.pow(Math.sin(dLon / 2), 2);
-    double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    double distance = RADIUS_OF_EARTH * c;
-    DecimalFormat df = new DecimalFormat("#.#");
-    distance = Double.parseDouble(df.format(distance));
 
-    return Math.round( distance);
+
+
+    double earthRadius = 6378137.0;
+    double dLat = _toRadians(lat2 - lat1);
+    double dLon = _toRadians(lon2 - lon1);
+
+    double a = pow(sin(dLat / 2), 2) +
+            pow(sin(dLon / 2), 2) *
+                    cos(_toRadians(lat1)) *
+                    cos(_toRadians(lat2));
+    double c = 2 * asin(sqrt(a));
+
+    return earthRadius * c;
+  }
+
+  static double _toRadians(double degree) {
+    return degree * 3.14159265358979323846  / 180;
   }
 }

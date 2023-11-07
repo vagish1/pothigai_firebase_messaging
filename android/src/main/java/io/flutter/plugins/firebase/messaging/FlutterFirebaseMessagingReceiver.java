@@ -52,7 +52,8 @@ import api.BookingDetailsRequest;
 public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
   private static final String TAG = "FLTFireMsgReceiver";
   static HashMap<String, RemoteMessage> notifications = new HashMap<>();
-  private static double RADIUS_OF_EARTH = 6371;
+
+  static TextView pickUp ;
 
   @Override
   public void onReceive(Context context, Intent intent) {
@@ -123,14 +124,14 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
 
 
           final TextView dropOff = inflater.findViewById(R.id.dropOffText);
-          final TextView pickUp = inflater.findViewById(R.id.pickupText);
+
           final TextView pickUpAddress = inflater.findViewById(R.id.pickupAddress);
           final TextView dropOffAddress = inflater.findViewById(R.id.dropOffAddress);
 
           final TextView pickupDateAndTypeOfTrip = inflater.findViewById(R.id.dateOfPickup);
           final SlideToActView slideToConfirm = inflater.findViewById(R.id.slideToActView);
 
-
+        pickUp=  inflater.findViewById(R.id.pickupText);
           travellingDistance.setText(getTypeOfBooking(bookingDetails.getData().getTypeOfBooking()));
           duration.setText(getDuration(bookingDetails.getData().getTypeOfBooking(),bookingDetails.getData().getTariffDetails().getNoOfDays(), bookingDetails.getData().getTariffDetails().getTimeInHours()));
 
@@ -168,7 +169,7 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
 
           carType.setText("Car Type : "+bookingDetails.getData().getVehicleType()+" | "+ bookingDetails.getData().getVehicleTransmissionType());
           dropOff.setText("Drop Off" + " | "+calculateDistance(bookingDetails.getData().getPickupLocation().getCoordinates()[1],bookingDetails.getData().getPickupLocation().getCoordinates()[0],bookingDetails.getData().getDestinationLocation().getCoordinates()[1],bookingDetails.getData().getDestinationLocation().getCoordinates()[0])+" Km");
-          pickUp.setText("Pick Up | "+ calculateDistanceBetweenUserAndDriver(context,bookingDetails.getData().getPickupLocation().getCoordinates()[1],bookingDetails.getData().getPickupLocation().getCoordinates()[0]) +" Km");
+
           final CountDownTimer timer = new CountDownTimer(120000,1000) {
             @Override
             public void onTick(long l) {
@@ -325,8 +326,12 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
     fusedLocationProviderClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
       @Override
       public void onSuccess(Location location) {
-        final double calculatedDistance = calculateDistance(location.getLatitude(),location.getLongitude(),lat,lng);
-        distance[0] = calculatedDistance+"";
+        System.out.println(location.getLatitude());
+        System.out.println(location.getLongitude());
+
+      
+        pickUp.setText("Pick Up | "+ calculateDistance(location.getLatitude(),location.getLongitude(),lat,lng) +" Km");
+
 
       }
     }).addOnFailureListener(new OnFailureListener() {

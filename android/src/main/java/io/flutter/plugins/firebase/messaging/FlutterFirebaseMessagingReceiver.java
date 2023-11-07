@@ -17,6 +17,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.PixelFormat;
 import android.graphics.Typeface;
+import android.location.Location;
 import android.media.MediaPlayer;
 import android.os.CountDownTimer;
 import android.util.Log;
@@ -28,6 +29,12 @@ import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
+
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnCanceledListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.messaging.RemoteMessage;
 import com.ncorti.slidetoact.SlideToActView;
 
@@ -116,6 +123,7 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
 
 
           final TextView dropOff = inflater.findViewById(R.id.dropOffText);
+          final TextView pickUp = inflater.findViewById(R.id.pickupText);
           final TextView pickUpAddress = inflater.findViewById(R.id.pickupAddress);
           final TextView dropOffAddress = inflater.findViewById(R.id.dropOffAddress);
 
@@ -160,6 +168,7 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
 
           carType.setText("Car Type : "+bookingDetails.getData().getVehicleType()+" | "+ bookingDetails.getData().getVehicleTransmissionType());
           dropOff.setText("Drop Off" + " | "+calculateDistance(bookingDetails.getData().getPickupLocation().getCoordinates()[1],bookingDetails.getData().getPickupLocation().getCoordinates()[0],bookingDetails.getData().getDestinationLocation().getCoordinates()[1],bookingDetails.getData().getDestinationLocation().getCoordinates()[0])+" Km");
+          pickUp.setText("Pick Up | "+ calculateDistanceBetweenUserAndDriver(context,bookingDetails.getData().getPickupLocation().getCoordinates()[1],bookingDetails.getData().getPickupLocation().getCoordinates()[0]) +" Km");
           final CountDownTimer timer = new CountDownTimer(120000,1000) {
             @Override
             public void onTick(long l) {
@@ -284,7 +293,7 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
   }
 
 
-   public static double calculateDistance(double lat1, double lon1, double lat2, double lon2) {
+  public static double calculateDistance(double lat1, double lon1, double lat2, double lon2) {
     // Convert latitude and longitude from degrees to radians
 
 
@@ -308,5 +317,27 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
 
   static double _toRadians(double degree) {
     return degree * 3.14159265358979323846  / 180;
+  }
+
+  public  static  String calculateDistanceBetweenUserAndDriver(Context context, double lat,double lng){
+    final String[] distance = {"Unknown"};
+    final FusedLocationProviderClient fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context);
+    fusedLocationProviderClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
+      @Override
+      public void onSuccess(Location location) {
+        final double calculatedDistance = calculateDistance(location.getLatitude(),location.getLongitude(),lat,lng);
+      }
+    }).addOnFailureListener(new OnFailureListener() {
+      @Override
+      public void onFailure(@NonNull Exception e) {
+        Log.e(TAG, "onFailure: ",e );
+      }
+    }).addOnCanceledListener(new OnCanceledListener() {
+      @Override
+      public void onCanceled() {
+        distance[0] = "N/a";
+      }
+    });
+    return distance[0];
   }
 }

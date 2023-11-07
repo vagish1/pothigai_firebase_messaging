@@ -326,6 +326,8 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
       @Override
       public void onSuccess(Location location) {
         final double calculatedDistance = calculateDistance(location.getLatitude(),location.getLongitude(),lat,lng);
+        distance[0] = calculatedDistance+"";
+
       }
     }).addOnFailureListener(new OnFailureListener() {
       @Override

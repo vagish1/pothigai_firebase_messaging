@@ -92,7 +92,7 @@ public class BookingDetailsRequest {
                                 // Parse the response into the BookingDetails model class
 
 
-                                listener.onSuccess();
+                                listener.onSuccess(response);
                             } catch (Exception e) {
                                 e.printStackTrace();
                                 listener.onError(e.getMessage());

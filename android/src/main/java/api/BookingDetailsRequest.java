@@ -129,7 +129,7 @@ public class BookingDetailsRequest {
     }
 
     public interface AcceptBookingListener{
-        void onSuccess();
+        void onSuccess(JSONObject respone);
         void onError(String errorMessage);
     }
 }

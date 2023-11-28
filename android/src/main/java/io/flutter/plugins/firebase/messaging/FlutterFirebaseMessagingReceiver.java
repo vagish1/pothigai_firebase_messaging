@@ -48,6 +48,8 @@ import java.util.TimeZone;
 import Models.BookingDetails;
 import antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator;
 import api.BookingDetailsRequest;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
   private static final String TAG = "FLTFireMsgReceiver";
@@ -211,14 +213,20 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
               //Todo : call accept Booking api
               BookingDetailsRequest.acceptBooking(context, remoteMessage.getData().get("recordId"), cookie, new BookingDetailsRequest.AcceptBookingListener() {
                 @Override
-                public void onSuccess() {
-                  Toast.makeText(context,"Thanks for accepting booking, check booking details inside app",Toast.LENGTH_LONG).show();
+                public void onSuccess(JSONObject res) {
+                  // Toast.makeText(context,"Thanks for accepting booking, check booking details inside app",Toast.LENGTH_LONG).show();
                   manager.removeView(inflater);
 
                   if(player.isPlaying()){
                     player.stop();
                   }
                   timer.cancel();
+                      try{
+                   final HashMap<String,Object> map = (HashMap<String, Object>) res.get("data");
+                    Toast.makeText(context, map.get("message").toString(), Toast.LENGTH_SHORT).show();
+                  }catch(Exception e){
+
+                  }
 
                 }
 

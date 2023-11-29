@@ -95,7 +95,8 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
         @Override
         public void onSuccess(BookingDetails bookingDetails) {
 
-          Log.d("Response", bookingDetails.toString());
+         try{
+           Log.d("Response", bookingDetails.toString());
           final MediaPlayer player = MediaPlayer.create(context, R.raw.ringtone);
           player.setLooping(true);
 
@@ -249,6 +250,9 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
           player.start();
           timer.start();
           manager.addView(inflater, layoutParams);
+         }catch(Exception e){
+          System.out.println(e.printStackTrace());
+         }
 
         }
 

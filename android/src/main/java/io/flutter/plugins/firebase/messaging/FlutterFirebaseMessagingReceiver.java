@@ -251,7 +251,7 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
           timer.start();
           manager.addView(inflater, layoutParams);
          }catch(Exception e){
-          System.out.println(e.printStackTrace());
+        e.printStackTrace();
          }
 
         }

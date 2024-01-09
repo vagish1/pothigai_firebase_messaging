@@ -234,7 +234,7 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
                 @Override
                 public void onError(String errorMessage) {
                   slideToConfirm.resetSlider();
-                  Toast.makeText(context,"We encountered an error while accepting the booking",Toast.LENGTH_LONG).show();
+                 // Toast.makeText(context,"We encountered an error while accepting the booking",Toast.LENGTH_LONG).show();
 
                   if(player.isPlaying()){
                     player.stop();

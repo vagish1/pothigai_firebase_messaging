@@ -39,7 +39,8 @@ public class BookingDetailsRequest {
                         public void onResponse(JSONObject response) {
                             try {
                                 // Parse the response into the BookingDetails model class
-                                  Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+                                Gson gson = new GsonBuilder().setPrettyPrinting().create();
                                 JsonElement jsonElement = JsonParser.parseString(response.toString());
                                 String prettyJson = gson.toJson(jsonElement);
                                 System.out.println(prettyJson);
@@ -49,15 +50,14 @@ public class BookingDetailsRequest {
                                 listener.onSuccess(bookingDetails);
                             } catch (JSONException e) {
                                 e.printStackTrace();
-                                listener.onError("Error creating JSON request"+e.getMessage());
+                                listener.onError("Error parsing JSON");
                             }
                         }
                     },
                     new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                           
-                            listener.onError("Error in network request"+ error.getMessage());
+                            listener.onError("Error in network request");
                         }
 
 
@@ -89,8 +89,11 @@ public class BookingDetailsRequest {
                         @Override
                         public void onResponse(JSONObject response) {
                             try {
-                                // Parse the response into the BookingDetails model class
-
+                               
+                                Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                                JsonElement jsonElement = JsonParser.parseString(response.toString());
+                                String prettyJson = gson.toJson(jsonElement);
+                                System.out.println(prettyJson);
 
                                 listener.onSuccess(response);
                             } catch (Exception e) {
@@ -102,7 +105,7 @@ public class BookingDetailsRequest {
                     new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            listener.onError("Error in network request");
+                            listener.onError("Error in network request"+ error.getMessage());
                         }
 
 
@@ -118,7 +121,7 @@ public class BookingDetailsRequest {
             requestQueue.add(jsonObjectRequest);
         } catch (JSONException e) {
             e.printStackTrace();
-            listener.onError("Error creating JSON request");
+            listener.onError("Error creating JSON request"+e.getMessage());
         }
     }
 
@@ -129,7 +132,7 @@ public class BookingDetailsRequest {
     }
 
     public interface AcceptBookingListener{
-        void onSuccess(JSONObject respone);
+        void onSuccess(JSONObject response);
         void onError(String errorMessage);
     }
 }

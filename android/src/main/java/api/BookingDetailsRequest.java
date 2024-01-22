@@ -1,6 +1,7 @@
 package api;
 
 import android.content.Context;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -8,9 +9,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.common.internal.Objects;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import org.json.JSONException;
@@ -89,11 +92,23 @@ public class BookingDetailsRequest {
                         @Override
                         public void onResponse(JSONObject response) {
                             try {
-                               
+
                                 Gson gson = new GsonBuilder().setPrettyPrinting().create();
                                 JsonElement jsonElement = JsonParser.parseString(response.toString());
                                 String prettyJson = gson.toJson(jsonElement);
                                 System.out.println(prettyJson);
+
+                                JSONObject data = response.optJSONObject("data");
+
+                                int responseCode = data.optInt("responseCode");
+                                String message = data.optString("message");
+
+                                if(responseCode == 109 || responseCode == 125){
+                                    Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+                                }
+
+
+
 
                                 listener.onSuccess(response);
                             } catch (Exception e) {

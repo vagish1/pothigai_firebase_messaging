@@ -19,7 +19,9 @@ import android.graphics.PixelFormat;
 import android.graphics.Typeface;
 import android.location.Location;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.CountDownTimer;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -38,6 +40,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.messaging.RemoteMessage;
 import com.ncorti.slidetoact.SlideToActView;
 
+import org.json.JSONObject;
+
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -48,8 +52,6 @@ import java.util.TimeZone;
 import Models.BookingDetails;
 import antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator;
 import api.BookingDetailsRequest;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
   private static final String TAG = "FLTFireMsgReceiver";
@@ -79,9 +81,38 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
       FlutterFirebaseMessagingStore.getInstance().storeFirebaseMessage(remoteMessage);
     }
 
+
+    initPopup(remoteMessage,context);
+
+    //  |-> ---------------------
+    //      App in Foreground
+    //   ------------------------
+    if (FlutterFirebaseMessagingUtils.isApplicationForeground(context)) {
+      FlutterFirebaseRemoteMessageLiveData.getInstance().postRemoteMessage(remoteMessage);
+      return;
+    }
+
+    //  |-> ---------------------
+    //    App in Background/Quit
+    //   ------------------------
+
+
+    Intent onBackgroundMessageIntent =
+            new Intent(context, FlutterFirebaseMessagingBackgroundService.class);
+    onBackgroundMessageIntent.putExtra(
+            FlutterFirebaseMessagingUtils.EXTRA_REMOTE_MESSAGE, remoteMessage);
+    FlutterFirebaseMessagingBackgroundService.enqueueMessageProcessing(
+            context, onBackgroundMessageIntent);
+  }
+
+  private static void initPopup(RemoteMessage remoteMessage, Context context){
     if(remoteMessage.getData().get("subject").equals("bookingStatusPending")){
 
-
+      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        if (!Settings.canDrawOverlays(context)){
+          return;
+        }
+      }
 
       SharedPreferences preferences = context.getSharedPreferences("session",Context.MODE_PRIVATE);
       String cookie = preferences.getString("cookie","");
@@ -95,8 +126,7 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
         @Override
         public void onSuccess(BookingDetails bookingDetails) {
 
-         try{
-           Log.d("Response", bookingDetails.toString());
+          Log.d("Response", bookingDetails.toString());
           final MediaPlayer player = MediaPlayer.create(context, R.raw.ringtone);
           player.setLooping(true);
 
@@ -123,7 +153,7 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
           final TextView skip = inflater.findViewById(R.id.textView);
           final TextView carType = inflater.findViewById(R.id.textView4);
           final CircularProgressIndicator countDownProgress = inflater.findViewById(R.id.progressBar2);
-          countDownProgress.setMaxProgress(90);
+          countDownProgress.setMaxProgress(120);
 
 
           final TextView dropOff = inflater.findViewById(R.id.dropOffText);
@@ -134,7 +164,7 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
           final TextView pickupDateAndTypeOfTrip = inflater.findViewById(R.id.dateOfPickup);
           final SlideToActView slideToConfirm = inflater.findViewById(R.id.slideToActView);
 
-        pickUp=  inflater.findViewById(R.id.pickupText);
+          pickUp=  inflater.findViewById(R.id.pickupText);
           travellingDistance.setText(getTypeOfBooking(bookingDetails.getData().getTypeOfBooking()));
           duration.setText(getDuration(bookingDetails.getData().getTypeOfBooking(),bookingDetails.getData().getTariffDetails().getNoOfDays(), bookingDetails.getData().getTariffDetails().getTimeInHours()));
 
@@ -173,11 +203,11 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
           carType.setText("Car Type : "+bookingDetails.getData().getVehicleType()+" | "+ bookingDetails.getData().getVehicleTransmissionType());
           dropOff.setText("Drop Off" + " | "+calculateDistance(bookingDetails.getData().getPickupLocation().getCoordinates()[1],bookingDetails.getData().getPickupLocation().getCoordinates()[0],bookingDetails.getData().getDestinationLocation().getCoordinates()[1],bookingDetails.getData().getDestinationLocation().getCoordinates()[0])+" Km");
           calculateDistanceBetweenUserAndDriver(context,bookingDetails.getData().getPickupLocation().getCoordinates()[1],bookingDetails.getData().getPickupLocation().getCoordinates()[0]);
-          final CountDownTimer timer = new CountDownTimer(90000,1000) {
+          final CountDownTimer timer = new CountDownTimer(120000,1000) {
             @Override
             public void onTick(long l) {
 
-              countDownProgress.setProgress(l/1000,90);
+              countDownProgress.setProgress(l/1000,120);
 
             }
 
@@ -215,15 +245,16 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
               BookingDetailsRequest.acceptBooking(context, remoteMessage.getData().get("recordId"), cookie, new BookingDetailsRequest.AcceptBookingListener() {
                 @Override
                 public void onSuccess(JSONObject res) {
-                  // Toast.makeText(context,"Thanks for accepting booking, check booking details inside app",Toast.LENGTH_LONG).show();
+
                   manager.removeView(inflater);
 
                   if(player.isPlaying()){
                     player.stop();
                   }
                   timer.cancel();
-                      try{
-                   final HashMap<String,Object> map = (HashMap<String, Object>) res.get("data");
+
+                  try{
+                    final HashMap<String,Object> map = (HashMap<String, Object>) res.get("data");
                     Toast.makeText(context, map.get("message").toString(), Toast.LENGTH_SHORT).show();
                   }catch(Exception e){
 
@@ -234,7 +265,8 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
                 @Override
                 public void onError(String errorMessage) {
                   slideToConfirm.resetSlider();
-                 // Toast.makeText(context,"We encountered an error while accepting the booking",Toast.LENGTH_LONG).show();
+
+                  Toast.makeText(context,"We encountered an error while accepting the booking",Toast.LENGTH_LONG).show();
 
                   if(player.isPlaying()){
                     player.stop();
@@ -250,9 +282,6 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
           player.start();
           timer.start();
           manager.addView(inflater, layoutParams);
-         }catch(Exception e){
-        e.printStackTrace();
-         }
 
         }
 
@@ -264,25 +293,6 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
       });
 
     }
-    //  |-> ---------------------
-    //      App in Foreground
-    //   ------------------------
-    if (FlutterFirebaseMessagingUtils.isApplicationForeground(context)) {
-      FlutterFirebaseRemoteMessageLiveData.getInstance().postRemoteMessage(remoteMessage);
-      return;
-    }
-
-    //  |-> ---------------------
-    //    App in Background/Quit
-    //   ------------------------
-
-
-    Intent onBackgroundMessageIntent =
-            new Intent(context, FlutterFirebaseMessagingBackgroundService.class);
-    onBackgroundMessageIntent.putExtra(
-            FlutterFirebaseMessagingUtils.EXTRA_REMOTE_MESSAGE, remoteMessage);
-    FlutterFirebaseMessagingBackgroundService.enqueueMessageProcessing(
-            context, onBackgroundMessageIntent);
   }
 
   private static String getTypeOfBooking(String type){

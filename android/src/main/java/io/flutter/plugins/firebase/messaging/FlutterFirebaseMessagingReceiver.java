@@ -58,6 +58,7 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
   static HashMap<String, RemoteMessage> notifications = new HashMap<>();
 
   static TextView pickUp ;
+   static TextView dropOff;
 
   @Override
   public void onReceive(Context context, Intent intent) {
@@ -156,7 +157,8 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
           countDownProgress.setMaxProgress(120);
 
 
-          final TextView dropOff = inflater.findViewById(R.id.dropOffText);
+                    dropOff = inflater.findViewById(R.id.dropOffText);
+
 
           final TextView pickUpAddress = inflater.findViewById(R.id.pickupAddress);
           final TextView dropOffAddress = inflater.findViewById(R.id.dropOffAddress);
@@ -201,7 +203,7 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
 
 
           carType.setText("Car Type : "+bookingDetails.getData().getVehicleType()+" | "+ bookingDetails.getData().getVehicleTransmissionType());
-          dropOff.setText("Drop Off" + " | "+calculateDistance(bookingDetails.getData().getPickupLocation().getCoordinates()[1],bookingDetails.getData().getPickupLocation().getCoordinates()[0],bookingDetails.getData().getDestinationLocation().getCoordinates()[1],bookingDetails.getData().getDestinationLocation().getCoordinates()[0])+" Km");
+         calculateDistance(context,bookingDetails.getData().getPickupLocation().getCoordinates()[1],bookingDetails.getData().getPickupLocation().getCoordinates()[0],bookingDetails.getData().getDestinationLocation().getCoordinates()[1],bookingDetails.getData().getDestinationLocation().getCoordinates()[0],false);
           calculateDistanceBetweenUserAndDriver(context,bookingDetails.getData().getPickupLocation().getCoordinates()[1],bookingDetails.getData().getPickupLocation().getCoordinates()[0]);
           final CountDownTimer timer = new CountDownTimer(120000,1000) {
             @Override
@@ -316,33 +318,56 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
   }
 
 
-  public static double calculateDistance(double lat1, double lon1, double lat2, double lon2) {
+  // public static double calculateDistance(double lat1, double lon1, double lat2, double lon2) {
+  //   // Convert latitude and longitude from degrees to radians
+
+
+
+  //   double earthRadius = 6378137.0;
+  //   double dLat = _toRadians(lat2 - lat1);
+  //   double dLon = _toRadians(lon2 - lon1);
+
+  //   double a = pow(sin(dLat / 2), 2) +
+  //           pow(sin(dLon / 2), 2) *
+  //                   cos(_toRadians(lat1)) *
+  //                   cos(_toRadians(lat2));
+  //   double c = 2 * asin(sqrt(a));
+
+  //   double distance = (earthRadius * c)/1000;
+  //   DecimalFormat decimalFormat = new DecimalFormat("#.##"); // Format to two decimal places
+  //   String formattedDistance = decimalFormat.format(distance);
+
+  //   return Double.parseDouble(formattedDistance);
+  // }
+
+  public static void calculateDistance(Context context,double lat1, double lon1, double lat2, double lon2,boolean forPickup) {
     // Convert latitude and longitude from degrees to radians
 
+    GoogleDistanceApi.getDistance(context, lat1, lon1, lat2, lon2, "AIzaSyC7x8VBCtgqBYSjD3TPubTFmylJg0SW1VM", new GoogleDistanceApi.DistanceListener() {
+      @Override
+      public void onSuccess(String distanceDetails) {
+        if(forPickup) {
+          pickUp.setText("Pick Up | " + distanceDetails);
+        }else{
+          dropOff.setText("Drop Off" + " | "+ distanceDetails);
+        }
+      }
+
+      @Override
+      public void onError(String errorMessage) {
+      System.out.println(errorMessage);
+      }
+    });
 
 
-    double earthRadius = 6378137.0;
-    double dLat = _toRadians(lat2 - lat1);
-    double dLon = _toRadians(lon2 - lon1);
 
-    double a = pow(sin(dLat / 2), 2) +
-            pow(sin(dLon / 2), 2) *
-                    cos(_toRadians(lat1)) *
-                    cos(_toRadians(lat2));
-    double c = 2 * asin(sqrt(a));
-
-    double distance = (earthRadius * c)/1000;
-    DecimalFormat decimalFormat = new DecimalFormat("#.##"); // Format to two decimal places
-    String formattedDistance = decimalFormat.format(distance);
-
-    return Double.parseDouble(formattedDistance);
   }
 
   static double _toRadians(double degree) {
     return degree * 3.14159265358979323846  / 180;
   }
 
-  public  static  String calculateDistanceBetweenUserAndDriver(Context context, double lat,double lng){
+public  static  String calculateDistanceBetweenUserAndDriver(Context context, double lat,double lng){
     final String[] distance = {"Unknown"};
     final FusedLocationProviderClient fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context);
     fusedLocationProviderClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
@@ -352,7 +377,7 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
         System.out.println(location.getLongitude());
 
 
-        pickUp.setText("Pick Up | "+ calculateDistance(location.getLatitude(),location.getLongitude(),lat,lng) +" Km");
+        calculateDistance(context,location.getLatitude(),location.getLongitude(),lat,lng,true) ;
 
 
       }

@@ -155,7 +155,7 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
           final TextView skip = inflater.findViewById(R.id.textView);
           final TextView carType = inflater.findViewById(R.id.textView4);
           final CircularProgressIndicator countDownProgress = inflater.findViewById(R.id.progressBar2);
-          countDownProgress.setMaxProgress(120);
+          countDownProgress.setMaxProgress(90);
 
 
                     dropOff = inflater.findViewById(R.id.dropOffText);
@@ -206,11 +206,11 @@ public class FlutterFirebaseMessagingReceiver extends BroadcastReceiver {
           carType.setText("Car Type : "+bookingDetails.getData().getVehicleType()+" | "+ bookingDetails.getData().getVehicleTransmissionType());
          calculateDistance(context,bookingDetails.getData().getPickupLocation().getCoordinates()[1],bookingDetails.getData().getPickupLocation().getCoordinates()[0],bookingDetails.getData().getDestinationLocation().getCoordinates()[1],bookingDetails.getData().getDestinationLocation().getCoordinates()[0],false);
           calculateDistanceBetweenUserAndDriver(context,bookingDetails.getData().getPickupLocation().getCoordinates()[1],bookingDetails.getData().getPickupLocation().getCoordinates()[0]);
-          final CountDownTimer timer = new CountDownTimer(120000,1000) {
+          final CountDownTimer timer = new CountDownTimer(90000,1000) {
             @Override
             public void onTick(long l) {
 
-              countDownProgress.setProgress(l/1000,120);
+              countDownProgress.setProgress(l/1000,90);
 
             }
 

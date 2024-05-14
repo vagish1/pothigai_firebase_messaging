@@ -25,9 +25,9 @@ import java.util.Map;
 import Models.BookingDetails;
 
 public class BookingDetailsRequest {
-    private static final String API_URL = "http://15.207.107.56/user/booking/details";
+    private static final String API_URL = "https://jivi.pothigaicalldrivers.com/user/booking/details";
 
-    private static final String ACCEPT_BOOKING = "http://15.207.107.56/user/booking/accept";
+    private static final String ACCEPT_BOOKING = "https://jivi.pothigaicalldrivers.com/user/booking/accept";
 
     public static void getBookingDetails(Context context, String bookingId, String cookieValue, final BookingDetailsListener listener) {
         RequestQueue requestQueue = Volley.newRequestQueue(context);
@@ -60,6 +60,8 @@ public class BookingDetailsRequest {
                     new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
+System.out.println(error.getMessage());
+                            System.out.println(error.networkResponse);
                             listener.onError("Error in network request");
                         }
 
@@ -113,6 +115,7 @@ public class BookingDetailsRequest {
                                 listener.onSuccess(response);
                             } catch (Exception e) {
                                 e.printStackTrace();
+                                
                                 listener.onError(e.getMessage());
                             }
                         }
@@ -120,6 +123,8 @@ public class BookingDetailsRequest {
                     new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
+                            System.out.println(error.networkResponse);
+System.out.println(error.getMessage());
                             listener.onError("Error in network request"+ error.getMessage());
                         }
 
